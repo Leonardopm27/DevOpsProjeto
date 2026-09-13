@@ -18,10 +18,15 @@ def inicio():
         arquivo = request.files["arquivo"]
 
         if arquivo.filename != "":
-            caminho = os.path.join(PASTA_UPLOAD, arquivo.filename)
-            arquivo.save(caminho)
 
-            mensagem = "Arquivo enviado com sucesso!"
+            if arquivo.filename.lower().endswith(".exe"):
+                mensagem = "Arquivos executáveis não são permitidos."
+
+            else:
+                caminho = os.path.join(PASTA_UPLOAD, arquivo.filename)
+                arquivo.save(caminho)
+
+                mensagem = "Arquivo enviado com sucesso!"
 
     return f"""
     <h1>Início de um servidor de arquivos teste, admito que utilizei auxilio externo para fazer esse backup</h1>
