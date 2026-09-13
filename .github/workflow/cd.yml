@@ -1,17 +1,12 @@
-name: CI
+name: CD
 
 on:
-  push:
-    branches:
-      - main
-      - Development
-
   pull_request:
     branches:
       - main
 
 jobs:
-  teste:
+  entrega:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,5 +21,11 @@ jobs:
       - name: Instalar bibliotecas
         run: pip install -r bibliotecas.txt
 
-      - name: Verificar codigo Python
-        run: python -m py_compile app.py
+      - name: Preparar aplicacao
+        run: |
+          mkdir entrega
+          cp app.py entrega/
+          cp bibliotecas.txt entrega/
+
+      - name: Verificar entrega
+        run: ls entrega
