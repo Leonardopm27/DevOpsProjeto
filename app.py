@@ -7,12 +7,15 @@ def inicio():
     return """
     <h1>Criação da página</h1>
     <h2>Pequena Lista<h2>
+     <p>Projeto desenvolvido para praticar conceitos de DevOps.</p>
 
     <ul>
         <li>Estudar Python</li>
         <li>Estudar Git</li>
         <li>Aprender Docker</li>
     </ul>
+    <p>Total de tarefas: 3</p>
+    <p>Ultimo commit da semana 2<p>
     """
 
 
