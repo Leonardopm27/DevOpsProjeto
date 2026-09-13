@@ -1,23 +1,49 @@
-from flask import Flask
+from flask import Flask, request
+import os
 
 app = Flask(__name__)
 
-@app.route("/")
-def inicio():
-    return """
-    <h1>Criação da página</h1>
-    <h2>Pequena Lista<h2>
-     <p>Projeto desenvolvido para praticar conceitos de DevOps.</p>
+PASTA_UPLOAD = "uploads"
 
-    <ul>
-        <li>Estudar Python</li>
-        <li>Estudar Git</li>
-        <li>Aprender Docker</li>
-    </ul>
-    <p>Total de tarefas: 3</p>
-    <p>Ultimo commit da semana 2<p>
+if not os.path.exists(PASTA_UPLOAD):
+    os.makedirs(PASTA_UPLOAD)
+
+
+@app.route("/", methods=["GET", "POST"])
+def inicio():
+
+    mensagem = ""
+
+    if request.method == "POST":
+        arquivo = request.files["arquivo"]
+
+        if arquivo.filename != "":
+
+            if arquivo.filename.lower().endswith(".exe"):
+                mensagem = "Arquivos executáveis não são permitidos."
+
+            else:
+                caminho = os.path.join(PASTA_UPLOAD, arquivo.filename)
+                arquivo.save(caminho)
+
+                mensagem = "Arquivo enviado com sucesso!"
+
+    return f"""
+    <h1>Início de um servidor de arquivos teste, admito que utilizei auxilio externo para fazer esse backup</h1>
+
+    <p>{mensagem}</p>
+
+    <form method="POST" enctype="multipart/form-data">
+
+        <input type="file" name="arquivo">
+
+        <button type="submit">
+            Enviar arquivo
+        </button>
+
+    </form>
     """
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5000)
