@@ -23,3 +23,12 @@ jobs:
 
       - name: Verificar codigo Python
         run: python -m py_compile app.py
+
+      - name: Enviar alerta para Discord
+        if: always()
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          curl -H "Content-Type: application/json" \
+          -d "{\"content\":\"GitHub Actions: existe mais uma entrada de Pull Request na branch main. Status: ${{ job.status }}\"}" \
+          "$DISCORD_WEBHOOK"
