@@ -24,6 +24,9 @@ jobs:
       - name: Verificar codigo Python
         run: python -m py_compile app.py
 
+      - name: Executar testes unitarios
+        run: python -m unittest teste.py
+
       - name: Enviar alerta para Discord
         if: always()
         env:
