@@ -25,7 +25,7 @@ jobs:
         run: python -m py_compile app.py
 
       - name: Executar testes unitarios
-        run: python -m unittest test_app.py
+        run: python -m unittest teste_app.py
 
       - name: Enviar alerta para Discord
         if: always()
